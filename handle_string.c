@@ -2,10 +2,17 @@
 
 int	handle_string(char *str)
 {
-	while (str != '\0')
+	int	count;
+	int	i;
+
+	count = 0;
+	i = 0;
+	if (!str)
+		str = "(null)";
+	while (str[i] != '\0')
 	{
-		write(1, &str, 1);
-		str++;
+		count += handle_char(str[i]);
+		i++;
 	}
-	return (1);
-} https://www.geeksforgeeks.org/c/how-to-write-your-own-printf-in-c/
+	return (count);
+}
