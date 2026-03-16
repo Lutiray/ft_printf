@@ -3,19 +3,15 @@
 int	handle_hex(unsigned long num, char c)
 {
 	int		count;
-	char	*hex_lower;
-	char	*hex_upper;
+	char	*hex;
 
 	count = 0;
-	hex_lower = "0123456789abcdef";
-	hex_upper = "0123456789ABCDEF";
-	if (num == 0)
-		return (handle_char('0'));
+	if (c == 'x')
+		hex = "0123456789abcdef";
+	else
+		hex = "0123456789ABCDEF";
 	if(num >= 16)
 		count += handle_hex(num / 16, c);
-	if (c == 'x')
-		count += handle_char(hex_lower[num % 16]);
-	else
-		count += handle_char(hex_upper[num % 16]);
+	count += handle_char(hex[num % 16]);
 	return (count);
 }

@@ -12,23 +12,23 @@ int	handle_function(char specifier, va_list arg)
 	else if (specifier == 's')
 		count = handle_string(va_arg(arg, char *));
 	else if (specifier == 'i')
-		count = handle_integer(va_arg(arg, int));
+		count = handle_int(va_arg(arg, int));
 	else if (specifier == 'd')
-		count = handle_number(va_arg(arg, long));
+		count = handle_number(va_arg(arg, int));
 	else if (specifier == 'u')
 		count = handle_decimal(va_arg(arg, unsigned int));
 	else if (specifier == 'p')
-		count = handle_pointer(va_arg(arg, unsigned long));
+		count = handle_pointer(va_arg(arg, void *));
 	else if (specifier == 'x' || specifier == 'X')
-		count = handle_hex(va_arg(arg, unsigned long), specifier);
+		count = handle_hex((unsigned long)va_arg(arg, unsigned int), specifier);
 	return (count);
 }
 
 int	ft_printf(const char *str, ...)
 {
 	va_list	args;
-	int	i;
-	int	count;
+	int		i;
+	int		count;
 
 	va_start(args, str);
 	count = 0;
@@ -36,7 +36,11 @@ int	ft_printf(const char *str, ...)
 	while (str[i])
 	{
 		if (str[i] == '%' && checkspecifier(str[i + 1]))
+		{
 			count += handle_function(str[i + 1], args);
+			i += 2;
+			continue;
+		}
 		else if (str[i] == '%' && !checkspecifier(str[i + 1]))
 		{
 			write(1, "Especifier ERROR!", 18);
@@ -44,10 +48,10 @@ int	ft_printf(const char *str, ...)
 		}
 		else
 		{
-			write(1, str[i], 1);
+			write(1, &str[i], 1);
 			count++;
+			i++;
 		}
-		i++;
 	}
 	va_end(args);
 	return (count);

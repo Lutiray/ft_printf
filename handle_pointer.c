@@ -1,16 +1,18 @@
 #include "ft_printf.h"
 
-int	ft_printfp(unsigned long number)
+int	handle_pointer(void *ptr)
 {
+	unsigned long addr;
 	int	count;
 
 	count = 0;
-	if (!number)
+	addr = (unsigned long)ptr;
+	if (!addr)
 	{
 		write (1, "(nil)", 5);
 		return (5);
 	}
-	count += ft_printfs("0x");
-	count += ft_printfx(number, 'x');
+	count += handle_string("0x");
+	count += handle_hex(addr, 'x');
 	return (count);
 }

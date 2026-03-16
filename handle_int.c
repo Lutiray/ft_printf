@@ -2,5 +2,5 @@
 
 int	handle_int(int number)
 {
-	return (handle_number((long)number))
+	return (handle_number(number));
 }

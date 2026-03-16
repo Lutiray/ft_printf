@@ -1,10 +1,12 @@
 #include "ft_printf.h"
 
-int	handle_number(long number)
+int	handle_number(int number)
 {
 	int	count;
 
 	count = 0;
+	if (number == -2147483648)
+		return (handle_string("-2147483648"));
 	if (number < 0)
 	{
 		count += handle_char('-');
